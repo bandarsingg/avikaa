@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device=390, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Birthday Cake!</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0e6d2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            width: 390px;
+            max-width: 100%;
+            font-family: 'SF Pro Display', sans-serif;
+        }
+        .cake-wrapper {
+            position: relative;
+            text-align: center;
+        }
+        .message {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+            position: absolute;
+            top: -165px;
+            width: 300px;
+            left: 55%;
+            transform: translateX(-50%);
+        }
+        .cake-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .cake {
+            position: relative;
+            width: 180px;
+            height: 240px;
+        }
+        .layer {
+            position: relative;
+            width: 100%;
+            background: #d3a4a4;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .layer:nth-child(1) { height: 70px; }
+        .layer:nth-child(2) { height: 70px; }
+        .layer:nth-child(3) { height: 60px; }
+        .icing {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            background: #fff;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        .candle {
+            position: absolute;
+            width: 15px;
+            height: 50px;
+            background: #ffeb3b;
+            border-radius: 5px 5px 0 0;
+            top: -50px;
+        }
+        .candle canvas {
+            position: absolute;
+            top: -25px;
+            left: 2.5px;
+            width: 10px;
+            height: 20px;
+            z-index: 1;
+        }
+        .candle:nth-child(5) { left: 10px; }
+        .candle:nth-child(6) { left: 40px; }
+        .candle:nth-child(7) { left: 70px; }
+        .candle:nth-child(8) { left: 100px; }
+        .candle:nth-child(9) { left: 130px; }
+        .candle:nth-child(10) { left: 160px; }
+    </style>
+</head>
+<body>
+    <div class="cake-wrapper">
+        <div class="message">Make a wish avika and click the candles to blow them out 😘</div>
+        <div class="cake-container">
+            <div class="cake">
+                <div class="layer"></div>
+                <div class="icing"></div>
+                <div class="layer"></div>
+                <div class="icing"></div>
+                <div class="layer"></div>
+                <div class="candle"><canvas id="flame1-canvas"></canvas></div>
+                <div class="candle"><canvas id="flame2-canvas"></canvas></div>
+                <div class="candle"><canvas id="flame3-canvas"></canvas></div>
+                <div class="candle"><canvas id="flame4-canvas"></canvas></div>
+                <div class="candle"><canvas id="flame5-canvas"></canvas></div>
+                <div class="candle"><canvas id="flame6-canvas"></canvas></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const canvases = [
+            { id: 'flame1-canvas', isLit: true },
+            { id: 'flame2-canvas', isLit: true },
+            { id: 'flame3-canvas', isLit: true },
+            { id: 'flame4-canvas', isLit: true },
+            { id: 'flame5-canvas', isLit: true },
+            { id: 'flame6-canvas', isLit: true }
+        ];
+
+        canvases.forEach(canvasObj => {
+            const canvas = document.getElementById(canvasObj.id);
+            const ctx = canvas.getContext('2d');
+            canvas.width = 10;
+            canvas.height = 20;
+
+            function drawFlame() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (canvasObj.isLit) {
+                    const flicker = Math.sin(Date.now() / 100 + Math.random() * 0.5) * 0.2 + 0.8;
+                    const size = Math.sin(Date.now() / 150) * 2 + 12;
+                    const sway = Math.sin(Date.now() / 200) * 1.5;
+                    ctx.fillStyle = `rgba(255, 69, 0, ${flicker})`;
+                    ctx.beginPath();
+                    ctx.moveTo(5 + sway, 20);
+                    ctx.quadraticCurveTo(2 + sway, 10, 5 + sway, 0);
+                    ctx.quadraticCurveTo(8 + sway, 10, 5 + sway, 20);
+                    ctx.fill();
+                }
+                requestAnimationFrame(drawFlame);
+            }
+
+            canvas.addEventListener('click', () => {
+                if (canvasObj.isLit) {
+                    canvasObj.isLit = false;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    if (canvases.every(c => !c.isLit)) {
+                        setTimeout(() => {
+                            alert('Happy Birthday Sweetheart!');
+                            window.location.href = 'birthday.html';
+                        }, 500);
+                    }
+                }
+            });
+
+            drawFlame();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device=390, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday!</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+</head>
+<body style="margin: 0; padding: 0; background: url('https://raw.githubusercontent.com/bandarsingg/song/refs/heads/main/6723f97cb4ff15c5021191e244c527a3.jpg') no-repeat center center/cover; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; width: 390px; max-width: 100%; margin: 0 auto; font-family: 'SF Pro Display', sans-serif;">
+    <button id="press-btn" style="padding: 15px 30px; font-size: 24px; font-family: 'SF Pro Display', sans-serif; background-color: #ff6f61; color: white; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.3s ease; position: relative; z-index: 10;">
+        Press
+    </button>
+    <!-- Multiple balloons -->
+    <div class="balloon" id="balloon1" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon2" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon3" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon4" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon5" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon6" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon7" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon8" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon9" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <div class="balloon" id="balloon10" style="position: absolute; font-size: 50px; bottom: 50%; left: 50%; transform: translate(-50%, 50%); opacity: 0; z-index: 5;">🎈</div>
+    <script>
+        document.getElementById('press-btn').addEventListener('click', () => {
+            const balloons = [
+                '#balloon1', '#balloon2', '#balloon3', '#balloon4', '#balloon5',
+                '#balloon6', '#balloon7', '#balloon8', '#balloon9', '#balloon10'
+            ];
+
+            balloons.forEach((balloonId, index) => {
+                gsap.fromTo(balloonId, 
+                    { opacity: 0, scale: 0.5, x: 0, y: 0 },
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        x: gsap.utils.random(-200, 200, 10),
+                        y: gsap.utils.random(-300, -100, 10),
+                        rotation: gsap.utils.random(-360, 360),
+                        duration: 1.5 + index * 0.1,
+                        ease: "power2.out",
+                        onComplete: () => {
+                            gsap.to(balloonId, {
+                                y: "-=400",
+                                opacity: 1,
+                                duration: 2 + index * 0.1,
+                                ease: "power1.out",
+                                onComplete: () => {
+                                    if (index === balloons.length - 1) {
+                                        gsap.to(balloonId, { opacity: 0, duration: 1, delay: 0.5, onComplete: () => {
+                                            window.location.href = 'cake.html';
+                                        }});
+                                    }
+                                }
+                            });
+                        }
+                    }
+                );
+            });
+        });
+    </script>
+</body>
+</html>
